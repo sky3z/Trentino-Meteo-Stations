@@ -5,7 +5,7 @@
 #import dei vari moduli necessari===============================================
 import glob				#per poter ricercare i file con le regular expression
 import os
-import time				#per poter eseguire una pausa in secondi, per date
+import time				#per poter eseguire una pausa in secondi
 import xlrd				#per poter operare su file .xls
 
 import selenium			#per poter navigare in internet in modo automatico
@@ -15,6 +15,10 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.keys import Keys
 
 import csv				#per poter salvare i dati in formato csv
+
+import datetime as dt	#per poter gestire le date
+
+from idd_str import *
 
 from winreg import *	#per soprire l'indirizzo assoluto della cartella di download
 #===============================================================================
@@ -26,10 +30,8 @@ def main():
 	    Downloads = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]	#path della cartella di downoad
 
 	#Apri il file relativo alla prima stazione controllata
-	# oggi = dt.datetime.today()							#data di oggi (contiene anche l'ora)
-	# data_iniziale = oggi - dt.timedelta(hours = 8760)	    #un anno prima
-	oggi = "2018-01-01 00:00:00"
-	data_iniziale ="2017-01-01 00:00:00"
+	oggi = dt.datetime.today()							#data di oggi (contiene anche l'ora)
+	data_iniziale = oggi - dt.timedelta(hours = 0)	#un anno prima
 
 	PAUSA = 4;		#pausa in secondi da eseguire dopo ogni download
 
@@ -139,9 +141,10 @@ def main():
 			pass										#se il file non eseiste, invece, non fare nulla
 
 		os.rename(path_file_nuovo, cartella + ide_str + ".xls")			#sposta il file finale nella cartella di default
+		tr_path = ide_str
 
 		#preparati per scrivere sul file csv =======================================
-		with open("Stazioni_Meteo_Trentino/" + ide_str + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella "Stazioni_Meteo_Trentino"
+		with open(trova_path(ide_str) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella "File_csv"
 			wr = csv.writer(myfile, quoting = csv.QUOTE_ALL)			#inizializzo subito il writer csv, in modo tale da poter scriver deirettamente su un nuovo file csv
 			#inserisci i riferimenti all'interno del file csv finale
 			wr.writerow(["NUMERO", "ID", "NOME", "DATA", "T MED", "UMID", "PG", "FB", "VEN-VEL", "RAD"])
