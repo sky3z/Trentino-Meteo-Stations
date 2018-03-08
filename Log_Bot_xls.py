@@ -30,8 +30,9 @@ def main():
 	    Downloads = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]	#path della cartella di downoad
 
 	#Apri il file relativo alla prima stazione controllata
-	oggi = dt.datetime.today()							#data di oggi (contiene anche l'ora)
-	data_iniziale = oggi - dt.timedelta(hours = 0)	#un anno prima
+	oggi = dt.datetime(2018,1,1,0,0,0)							#data di oggi (contiene anche l'ora)
+	data_iniziale = oggi - dt.timedelta(hours = 8760)	#un anno prima
+	print(oggi, data_iniziale)
 
 	PAUSA = 4;		#pausa in secondi da eseguire dopo ogni download
 
@@ -144,7 +145,7 @@ def main():
 		tr_path = ide_str
 
 		#preparati per scrivere sul file csv =======================================
-		with open(trova_path(ide_str) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella "File_csv"
+		with open(trova_path(ide_str, data_iniziale) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella "File_csv"
 			wr = csv.writer(myfile, quoting = csv.QUOTE_ALL)			#inizializzo subito il writer csv, in modo tale da poter scriver deirettamente su un nuovo file csv
 			#inserisci i riferimenti all'interno del file csv finale
 			wr.writerow(["NUMERO", "ID", "NOME", "DATA", "T MED", "UMID", "PG", "FB", "VEN-VEL", "RAD"])
