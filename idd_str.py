@@ -1,12 +1,15 @@
-from Log_Bot_xls import *
-import os
-import sys
-import time
-import random
-def trova_path(ide_str, data_iniziale):
-	pat_ide = ide_str
-	if pat_ide == ide_str:
-		if ide_str == str(30):
+"""
+Programma che viene richiamato nel file main "Log_Bot_xls.py", questa è una funzione che indica,
+in base a quale valore assume ide_str che è l'ID di ogni stazione a quale cartella deve "andare"
+il file csv
+"""
+from Log_Bot_xls import *			# importazione da Log_Bot_xls di tutto
+import os							# importazione del modulo os
+
+def trova_path(ide_str, data_iniziale):  # funzione trova_path()
+	pat_ide = ide_str					 # la variabile pat_ide è uaguale alla variabile ide_str
+	if pat_ide == ide_str:    			 # Controllo inutile ma sempre funzionale, in quanto controlla che le due variabili siano uguali prima di proseguire
+		if ide_str == str(30):			 # ciclo che se ide_str corrisponde alla determinata stringa, fa diventare la variabile pat_ide uaguale al nome della stazione assegnatale
 			pat_ide = "Ala/"
 		elif ide_str == str(59):
 			pat_ide = "Aldeno/"
@@ -176,12 +179,10 @@ def trova_path(ide_str, data_iniziale):
 			pat_ide = "Zambana/"
 		elif ide_str == str(75):
 			pat_ide = "Zortea/"
-		else:
-			print("ERROR: The program can't associate the file to a folder")
-	k = dict(IP="Stazioni_Meteo_Trentino/", ID=pat_ide)
-	if data_iniziale.year == 2017:
-		da_ta = "2017/"
-	print(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")
-	return(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")
-
-# trova_path(ide_str)
+		else:						# altrimenti
+			print("ERROR: The program can't associate the file to a folder")	 # stampa il testo
+	k = dict(IP="Stazioni_Meteo_Trentino/", ID=pat_ide)			# creazione di un dizionario con chiave IP e valore ID che corrisponde a pat_ide
+	if data_iniziale.year == 2017:								# se la data del file xls da scaricare è uguale a 2017
+		da_ta = "2017/"										    # la variabile da_ta corrisponde alla cartella 2017
+	print(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")			# stampa per visionare l'indirizzo di path ottenuto
+	return(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")		# ritorna al programma Log_Bot_xls la path

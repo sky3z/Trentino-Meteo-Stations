@@ -18,9 +18,9 @@ import csv				#per poter salvare i dati in formato csv
 
 import datetime as dt	#per poter gestire le date
 
-from idd_str import *
+from idd_str import *   # per poter richiamare la funzione trova_path()
 
-from idd_down import *
+from idd_down import *  # per poter richiamare la funzione trova_pdown()
 
 from winreg import *	#per soprire l'indirizzo assoluto della cartella di download
 #===============================================================================
@@ -140,14 +140,14 @@ def main():
 		print(nome_file_nuovo)
 
 		try:
-			os.remove(cartella + ide_str + ".xls")		#se il file finale esiste già nella cartella di default, rimuovilo
+			os.remove(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		#se il file finale esiste già nella cartella data dalla funzione trova_pdown(), rimuovilo
 		except FileNotFoundError:
 			pass										#se il file non eseiste, invece, non fare nulla
 
-		os.rename(path_file_nuovo, trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")			#sposta il file finale nella cartella di default
+		os.rename(path_file_nuovo, trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")			#sposta il file finale nella cartella data dalla funzione trova_pdown
 
 		#preparati per scrivere sul file csv =======================================
-		with open(trova_path(ide_str, data_iniziale) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella "File_csv"
+		with open(trova_path(ide_str, data_iniziale) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella data dalla dunzione trova_path()
 			wr = csv.writer(myfile, quoting = csv.QUOTE_ALL)			#inizializzo subito il writer csv, in modo tale da poter scriver deirettamente su un nuovo file csv
 			#inserisci i riferimenti all'interno del file csv finale
 			wr.writerow(["NUMERO", "ID", "NOME", "DATA", "T MED", "UMID", "PG", "FB", "VEN-VEL", "RAD"])
