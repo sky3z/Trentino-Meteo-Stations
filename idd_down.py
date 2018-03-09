@@ -3,7 +3,7 @@ import os
 import sys
 import time
 import random
-def trova_path(ide_str, data_iniziale):
+def trova_pdown(ide_str, data_iniziale):
 	pat_ide = ide_str
 	if pat_ide == ide_str:
 		if ide_str == str(30):
@@ -181,7 +181,7 @@ def trova_path(ide_str, data_iniziale):
 	k = dict(IP="Stazioni_Meteo_Trentino/", ID=pat_ide)
 	if data_iniziale.year == 2017:
 		da_ta = "2017/"
-	print(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")
-	return(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")
+	print(k["IP"] + k["ID"] + da_ta + "dati/" + "xls/")
+	return(k["IP"] + k["ID"] + da_ta + "dati/" + "xls/")
 
 # trova_path(ide_str)

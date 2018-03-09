@@ -20,6 +20,8 @@ import datetime as dt	#per poter gestire le date
 
 from idd_str import *
 
+from idd_down import *
+
 from winreg import *	#per soprire l'indirizzo assoluto della cartella di download
 #===============================================================================
 
@@ -30,8 +32,8 @@ def main():
 	    Downloads = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]	#path della cartella di downoad
 
 	#Apri il file relativo alla prima stazione controllata
-	oggi = dt.datetime(2018,1,1,0,0,0)							#data di oggi (contiene anche l'ora)
-	data_iniziale = oggi - dt.timedelta(hours = 8760)	#un anno prima
+	oggi = dt.datetime(2017,12,31,23,59,59)							#data di oggi (contiene anche l'ora)
+	data_iniziale = oggi - dt.timedelta(hours = 8750)	#un anno prima
 	print(oggi, data_iniziale)
 
 	PAUSA = 4;		#pausa in secondi da eseguire dopo ogni download
@@ -135,14 +137,14 @@ def main():
 		path_file_nuovo = max(lista, key=os.path.getctime)			#cerca il file più recente
 		path_file_nuovo = str(path_file_nuovo)						#trasforma il suo path in una stringa
 		nome_file_nuovo = path_file_nuovo.split("\\")[-1]			#trova il suo nome
+		print(nome_file_nuovo)
 
 		try:
 			os.remove(cartella + ide_str + ".xls")		#se il file finale esiste già nella cartella di default, rimuovilo
 		except FileNotFoundError:
 			pass										#se il file non eseiste, invece, non fare nulla
 
-		os.rename(path_file_nuovo, cartella + ide_str + ".xls")			#sposta il file finale nella cartella di default
-		tr_path = ide_str
+		os.rename(path_file_nuovo, trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")			#sposta il file finale nella cartella di default
 
 		#preparati per scrivere sul file csv =======================================
 		with open(trova_path(ide_str, data_iniziale) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella "File_csv"
@@ -152,7 +154,7 @@ def main():
 
 		#apertura file e controllo dei suoi dati ===================================
 
-			file_xls = xlrd.open_workbook(cartella + ide_str + ".xls")		#apri il file appena salvato
+			file_xls = xlrd.open_workbook(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		#apri il file appena salvato
 			sheet = file_xls.sheet_by_index(0)								#seleziona il foglio di lavoro
 
 			for riga in range(sheet.nrows):					#cicla su ogni riga
