@@ -80,13 +80,13 @@ def main():
 	#Al momento vengono scaricati solo i dati relativi all'ora corrente
 	dati_stazioni = []		#lista di dati scaricati
 
-	num = 0
-	dir_num = os.path.dirname(__file__)
-	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:
-		num = int(f.read())
-		if num == 0:
+	num = 0						# imposta variabile num a 0
+	dir_num = os.path.dirname(__file__)		# directory dir_num è uaguale a __file__
+	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:		# viene aperto num.txt con permessi di lettura
+		num = int(f.read())					# num è uguale all'intero di quello che legge nel file
+		if num == 0:						# se num è uguale a 0, lascia così, questo controllo è stato fatto perchè se si andava a togliere sempre -1, il programma al primo avvio prendeva come informazione -1
 			num = 0
-		elif num > 0:
+		elif num > 0:						# se num è maggiore a 0, sottrai meno 1, così riparte dall'ultima stazione effettuata prima del crash
 			num = num - 1
 
 	while True:
@@ -189,12 +189,13 @@ def main():
 		ritorna = browser.find_element_by_xpath('//*[@id="articolo"]/form[1]/button')
 		ritorna.click()		#premi il pulsante per tornare indietro
 
-		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:
-			if num > 86:
-				f.write(str(0))
+		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:		# apre il file num.txt per effettuare le modifiche
+			if num > 86:						# se num è maggiore di 86
+				f.write(str(0))					# riporta il numero di stazione fatte a 0
+				f.close()						# chiudi il file
 			else:
-				f.write(str(num))
-				f.close()
+				f.write(str(num))				# altrimenti scrivi sottoforma di stringa il numero della stazione appena effettuata
+				f.close()						# chiudi il file
 
 		#except Exception :
 			#print("Lista di stazioni terminata, programa terminato")
