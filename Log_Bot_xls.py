@@ -81,6 +81,13 @@ def main():
 	dati_stazioni = []		#lista di dati scaricati
 
 	num = 0
+	dir_num = os.path.dirname(__file__)
+	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:
+		num = int(f.read())
+		if num == 0:
+			num = 0
+		elif num > 0:
+			num = num - 1
 
 	while True:
 		#try:
@@ -181,6 +188,13 @@ def main():
 		#ricerca il pulsante per tornare indietro
 		ritorna = browser.find_element_by_xpath('//*[@id="articolo"]/form[1]/button')
 		ritorna.click()		#premi il pulsante per tornare indietro
+
+		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:
+			if num > 86:
+				f.write(str(0))
+			else:
+				f.write(str(num))
+				f.close()
 
 		#except Exception :
 			#print("Lista di stazioni terminata, programa terminato")
