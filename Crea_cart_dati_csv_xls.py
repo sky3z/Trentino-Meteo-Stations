@@ -1,5 +1,5 @@
 """
-Programma che crea le sottocartelle csv e xls in tutte le cartelle delle stazioni meteo,
+Programma che crea le sottocartelle csv e xls, in tutte le cartelle delle stazioni meteo,
 questo programma "sfrutta" il modulo os per poter creare le cartelle e conoscere la path dove
 poterla creare. Logicamente se questa non esiste già, come dice il comando if not os.path.exists(nome).
 """

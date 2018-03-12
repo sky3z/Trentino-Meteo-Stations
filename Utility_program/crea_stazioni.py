@@ -1,5 +1,5 @@
 """
-Programma creato per creare le cartelle di tutte le stazioni in Stazioni_Meteo_Trentino/
+Programma scitto per creare le cartelle di tutte le stazioni in Stazioni_Meteo_Trentino/
 Anche questo programma è stato creato per utilità nel creare le cartelle automaticamente
 e non fare tutto manualmente
 """

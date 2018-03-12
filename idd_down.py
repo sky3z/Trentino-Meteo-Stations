@@ -1,6 +1,6 @@
 """
 Programma che viene richiamato nel file main "Log_Bot_xls.py", questa è una funzione che indica,
-in base a quale valore assume ide_str che è l'ID di ogni stazione a quale cartella deve "andare"
+in base a quale valore assume ide_str, che è l'ID di ogni stazione a quale cartella deve "andare"
 il download del file xls
 """
 from Log_Bot_xls import *			# dal programma Log_Bot_xls importa tutto, per sapere il valore di ide_str

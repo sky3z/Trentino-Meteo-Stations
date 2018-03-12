@@ -1,6 +1,6 @@
 """
 Script Python creato per comodità nel scrivere il programma idd_down e idd_str,
-questo "programma" scrive in un file chiamato ciclo_stazioni delle righe di codice
+questo "programma" scrive in un file chiamato ciclo_stazioni delle righe di codice,
 che poi verranno utilizzate.
 """
 

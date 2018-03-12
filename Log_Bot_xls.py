@@ -107,7 +107,7 @@ def main():
 
 		# ricerca il pulsante "Invia" per confermare la selezione
 		invia = browser.find_element_by_xpath('//*[@id="articolo"]/form/input[9]')
-		invia.click()		#pressione pulsante "Invia"
+		invia.click()		# pressione pulsante "Invia"
 
 		# trova il pulsante per scaricare il file in formato xls
 		download = browser.find_element_by_xpath('//*[@id="articolo"]/form[2]/button')

@@ -8,13 +8,14 @@ from reportlab.lib import colors
 class LetterMaker(object):
 	""""""
 
-	def __init__(self, pdf_file, org, seconds, namestation):
+	def __init__(self, pdf_file, org, seconds, namestation, id):
 		self.c = canvas.Canvas(pdf_file, pagesize=letter)
 		self.styles = getSampleStyleSheet()
 		self.width, self.height = letter
 		self.organization = org
 		self.seconds = seconds
 		self.namestation = namestation
+		self.id = id
 
 	def createDocument(self):
 		""""""
@@ -28,89 +29,89 @@ class LetterMaker(object):
 		logo.drawOn(self.c, *self.coord(65, 80, mm))
 
 		address = """<font size="32">
-		Stazione di %s</font>
-        """ % (self.namestation)
+		Stazione di %s%s</font>
+        """ % (self.namestation, self.id)
 		p = Paragraph(address, self.styles["Normal"])
 		p.wrapOn(self.c, self.width, self.height)
-		p.drawOn(self.c, *self.coord("CENTER", 180))
+		p.drawOn(self.c, *self.coord(200, 180))
 
 		tMedia = """<font size="12">
 		<b>Temperatura media</b></font>
 		"""
-		self.createParagraph(tMedia, 18, voffset+15)
+		self.createParagraph(tMedia, 18, voffset+25)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
 				["0", "0", "0"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (-1,-1), (-1,-1), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1.5, colors.black)])
+						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
-		table.drawOn(self.c, *self.coord(18,95, mm))
+		table.drawOn(self.c, *self.coord(18, 105, mm))
 
 		umid = """<font size="12">
 		<b>Umidità</b></font>
 		"""
-		self.createParagraph(umid, 18, voffset + 40)
+		self.createParagraph(umid, 18, voffset + 50)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
 				["0", "0", "0"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1.5, colors.black)])
+						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
-		table.drawOn(self.c, *self.coord(18,120, mm))
+		table.drawOn(self.c, *self.coord(18,130, mm))
 
 		piogg = """<font size="12">
 		<b>Pioggia</b></font>
 		"""
-		self.createParagraph(piogg, 18, voffset + 65)
+		self.createParagraph(piogg, 18, voffset + 75)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
 				["0", "0", "0"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1.5, colors.black)])
+						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
-		table.drawOn(self.c, *self.coord(18,145, mm))
+		table.drawOn(self.c, *self.coord(18,155, mm))
 
 		bagnFogl = """<font size="12">
 		<b>Bagnatura fogliare</b></font>
 		"""
-		self.createParagraph(bagnFogl, 18, voffset + 90)
+		self.createParagraph(bagnFogl, 18, voffset + 100)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
 				["0", "0", "0"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1.5, colors.black)])
+						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
-		table.drawOn(self.c, *self.coord(18,170, mm))
+		table.drawOn(self.c, *self.coord(18,180, mm))
 
 		velVento = """<font size="12">
 		<b>Velocità vento</b></font>
 		"""
-		self.createParagraph(velVento, 18, voffset + 115)
+		self.createParagraph(velVento, 18, voffset + 125)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
 				["0", "0", "0"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1.5, colors.black)])
+						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
-		table.drawOn(self.c, *self.coord(18,195, mm))
+		table.drawOn(self.c, *self.coord(18,205, mm))
 
 		radSolare = """<font size="12">
 		<b>Radiazione solare</b></font>
 		"""
-		self.createParagraph(radSolare, 18, voffset + 140)
+		self.createParagraph(radSolare, 18, voffset + 150)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
 				["0", "0", "0"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1.5, colors.black)])
+						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
-		table.drawOn(self.c, *self.coord(18,220, mm))
+		table.drawOn(self.c, *self.coord(18,230, mm))
 
 
 	def coord(self, x, y, unit=1):
@@ -134,6 +135,6 @@ class LetterMaker(object):
 		self.c.save()
 
 if __name__ == "__main__":
-	doc = LetterMaker("example.pdf", "Metacortex", 10, "Ala")
+	doc = LetterMaker("example.pdf", "Metacortex", 10, "Paveneggio", "(30)")
 	doc.createDocument()
 	doc.savePDF()
