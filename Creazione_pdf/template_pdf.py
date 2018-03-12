@@ -28,12 +28,54 @@ class LetterMaker(object):
 		logo.wrapOn(self.c, self.width, self.height)
 		logo.drawOn(self.c, *self.coord(65, 80, mm))
 
-		address = """<font size="32">
+		address = """<font size="24">
 		Stazione di %s%s</font>
         """ % (self.namestation, self.id)
 		p = Paragraph(address, self.styles["Normal"])
 		p.wrapOn(self.c, self.width, self.height)
-		p.drawOn(self.c, *self.coord(200, 180))
+		if len(self.namestation) == 6:
+			self.X = 188
+		elif len(self.namestation) == 3:
+			self.X = 223
+		elif len(self.namestation) == 4:
+			self.X = 214
+		elif len(self.namestation) == 5:
+			self.X = 205
+		elif len(self.namestation) == 7:
+			self.X = 180
+		elif len(self.namestation) == 8:
+			self.X = 175
+		elif len(self.namestation) == 9:
+			self.X = 172
+		elif len(self.namestation) == 10:
+			self.X = 168
+		elif len(self.namestation) == 11:
+			self.X = 164
+		elif len(self.namestation) == 12:
+			self.X = 160
+		elif len(self.namestation) == 13:
+			self.X = 156
+		elif len(self.namestation) == 14:
+			self.X = 152
+		elif len(self.namestation) == 15:
+			self.X = 148
+		elif len(self.namestation) == 16:
+			self.X = 144
+		elif len(self.namestation) == 17:
+			self.X = 140
+		elif len(self.namestation) == 18:
+			self.X = 136
+		elif len(self.namestation) == 19:
+			self.X = 132
+		elif len(self.namestation) == 20:
+			self.X = 128
+		elif len(self.namestation) == 21:
+			self.X = 124
+		elif len(self.namestation) == 22:
+			self.X = 120
+		elif len(self.namestation) == 23:
+			self.X = 116
+		p.drawOn(self.c, *self.coord(self.X, 195))
 
 		tMedia = """<font size="12">
 		<b>Temperatura media</b></font>
@@ -135,6 +177,6 @@ class LetterMaker(object):
 		self.c.save()
 
 if __name__ == "__main__":
-	doc = LetterMaker("example.pdf", "Metacortex", 10, "Paveneggio", "(30)")
+	doc = LetterMaker("example.pdf", "Metacortex", 10, "Paveneggo", "(30)")
 	doc.createDocument()
 	doc.savePDF()
