@@ -26,7 +26,7 @@ def main():
 
 	# Apri il file relativo alla prima stazione controllata
 	oggi = dt.datetime(2017,12,31,23,59,59)						# data che si vuole immettere
-	data_iniziale = oggi - dt.timedelta(hours = 8750)			# un anno prima
+	data_iniziale = oggi - dt.timedelta(hours = 8759)			# un anno prima
 	print(oggi, data_iniziale)
 	PAUSA = 4;		# pausa in secondi da eseguire dopo ogni download
 

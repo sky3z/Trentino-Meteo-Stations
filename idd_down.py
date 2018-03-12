@@ -39,6 +39,8 @@ def trova_pdown(ide_str, data_iniziale):		# funzione trova_pdown()
 			pat_ide = "Caldes/"
 		elif ide_str == str(66):
 			pat_ide = "Caldonazzo/"
+		elif ide_str == str(166):
+			pat_ide = "Caldonazzo_Brina/"
 		elif ide_str == str(83):
 			pat_ide = "Cavedine/"
 		elif ide_str == str(44):

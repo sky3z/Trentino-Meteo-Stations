@@ -22,7 +22,7 @@ class LetterMaker(object):
 		voffset = 65
 
 		# add a logo and size it
-		logo = Image("meta_logo.jpg")
+		logo = Image('Metacortex_Posit.jpg')
 		logo.drawHeight = 3*inch
 		logo.drawWidth = 3.5*inch
 		logo.wrapOn(self.c, self.width, self.height)
