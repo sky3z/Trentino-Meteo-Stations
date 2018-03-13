@@ -4,6 +4,7 @@ from reportlab.lib.units import mm, inch
 from reportlab.pdfgen import canvas
 from reportlab.platypus import Image, Paragraph, Table
 from reportlab.lib import colors
+import os
 
 class LetterMaker(object):
 	""""""
@@ -175,6 +176,10 @@ class LetterMaker(object):
 	def savePDF(self):
 		""""""
 		self.c.save()
+
+	def obtainsData(self):
+		""""""
+		self.pathname = os.path.abspath(os.path)
 
 if __name__ == "__main__":
 	doc = LetterMaker("example.pdf", "Metacortex", 10, "Paveneggo", "(30)")

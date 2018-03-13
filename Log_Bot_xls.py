@@ -155,7 +155,7 @@ def main():
 		ritorna = browser.find_element_by_xpath('//*[@id="articolo"]/form[1]/button')
 		ritorna.click()		# premi il pulsante per tornare indietro
 		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:	 # apre il file num.txt per effettuare le modifiche
-			if num > 86:										# se num è maggiore di 86
+			if num >= 86:										# se num è maggiore di 86
 				f.write(str(0))									# riporta il numero di stazione fatte a 0
 				f.close()										# chiudi il file
 			else:
