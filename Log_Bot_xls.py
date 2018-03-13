@@ -17,30 +17,24 @@ import datetime as dt											# per poter gestire le date
 from idd_str import *   										# per poter richiamare la funzione trova_path()
 from idd_down import *  										# per poter richiamare la funzione trova_pdown()
 from winreg import *											# per soprire l'indirizzo assoluto della cartella di download
-#===============================================================================
+
 
 def main():
 	# ricerca la cartella di dovnload
 	with OpenKey(HKEY_CURRENT_USER, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
-	    Downloads = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]	# path della cartella di downoad
+		Downloads = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]	 # path della cartella di downoad
 
 	# Apri il file relativo alla prima stazione controllata
-	oggi = dt.datetime(2017,12,31,23,59,59)						# data che si vuole immettere
-	data_iniziale = oggi - dt.timedelta(hours = 8759)			# un anno prima
+	oggi = dt.datetime(2017, 12, 31, 23, 59, 59)						# data che si vuole immettere
+	data_iniziale = oggi - dt.timedelta(hours=8759)			# un anno prima
 	print(oggi, data_iniziale)
-	PAUSA = 4;		# pausa in secondi da eseguire dopo ogni download
+	PAUSA = 4		# pausa in secondi da eseguire dopo ogni download
 
 	# componenti necessari a selezionare il periodo di riferimento
 	comp = ["gg_in", "mm_in", "aa_in", "hh_in", "gg_fi", "mm_fi", "aa_fi", "hh_fi"]
 
-	# dati che si devono prelevare (temperatura, umidità, pioggia, bagnatura
-	#							   fogliare, velocità del vento e radiazione solare)
-	dati_prel =["DATA", "T MED [°C]", "UMID [ %]", "PG [mm]", "FB [min]", "VEN-VEL n[m/s]", "RAD [MJ/mq]"]
 	usernameStr = "nicola.laporta@fmach.it"						# nome utente
 	passwordStr = "venturia"									# password utente
-
-	# cartella personalizzata di download
-	cartella = "Xls_download/"
 
 	# connessione al sito http://www.fmach.it/user/login ============================
 	browser = selenium.webdriver.Chrome()						# creazione oggetto
@@ -61,16 +55,14 @@ def main():
 	meteo.click()												# pressione pulsante "Meteo"
 	dati = browser.find_element_by_link_text("DATI")			# ricerca pulsante "Dati"
 	dati.click()												# pressione pulsante "Dati"
-	tabelle = browser.find_element_by_link_text("Tabelle Pronte")	#ricerca pulsante "Tabelle pronte"
+	tabelle = browser.find_element_by_link_text("Tabelle Pronte")	 # ricerca pulsante "Tabelle pronte"
 	tabelle.click()												# pressione pulsante "Tabelle pronte"
 
-	# Al momento vengono scaricati solo i dati relativi all'ora corrente
-	dati_stazioni = []											# lista di dati scaricati
 	num = 0														# imposta variabile num a 0
 	dir_num = os.path.dirname(__file__)							# directory dir_num è uaguale a __file__
 	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:		# viene aperto num.txt con permessi di lettura
 		num = int(f.read())										# num è uguale all'intero di quello che legge nel file
-		if num == 0:											# se num è uguale a 0, lascia così, questo controllo è stato fatto perchè se si andava a togliere sempre -1, il programma al primo avvio prendeva come informazione -1
+		if num == 0:											# se num è uguale a 0, lascia così, questo controllo è stato fatto perchè se si andava a togliere sempre -1
 			num = 0
 		elif num > 0:											# se num è maggiore a 0, sottrai meno 1, così riparte dall'ultima stazione effettuata prima del crash
 			num = num - 1
@@ -84,7 +76,7 @@ def main():
 		# estrazione dati utili
 		nam = loc.text
 		nam = nam.strip()
-		nam_str,  ide_str= nam.split("(")
+		nam_str, ide_str = nam.split("(")
 		ide_str = ide_str.replace(")", "")
 		ide_str = ide_str.strip()								# id stazione
 		nam_str = nam_str.strip()								# nome stazione
@@ -95,8 +87,7 @@ def main():
 		mod.click()												# selezione modalità di ricerca
 
 		# orario effettivo da ricercare
-		orario = [data_iniziale.day, data_iniziale.month, data_iniziale.year,
-					data_iniziale.hour, oggi.day, oggi.month, oggi.year, oggi.hour]
+		orario = [data_iniziale.day, data_iniziale.month, data_iniziale.year, data_iniziale.hour, oggi.day, oggi.month, oggi.year, oggi.hour]
 
 		# inserimento orario
 		for i in range(8):
@@ -128,19 +119,19 @@ def main():
 		nome_file_nuovo = path_file_nuovo.split("\\")[-1]		# trova il suo nome
 		print(nome_file_nuovo)
 		try:
-			os.remove(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		#se il file finale esiste già nella cartella data dalla funzione trova_pdown(), rimuovilo
+			os.remove(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		# se il file finale esiste già nella cartella data dalla funzione trova_pdown(), rimuovilo
 		except FileNotFoundError:
 			pass												# se il file non eseiste, invece, non fare nulla
-		os.rename(path_file_nuovo, trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")			#sposta il file finale nella cartella data dalla funzione trova_pdown
+		os.rename(path_file_nuovo, trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")			# sposta il file finale nella cartella data dalla funzione trova_pdown
 
 		# preparati per scrivere sul file csv =======================================
-		with open(trova_path(ide_str, data_iniziale) + str(ide_str) + ".csv", "w") as myfile:		#crea i nuovi file all'interno della cartella data dalla dunzione trova_path()
-			wr = csv.writer(myfile, quoting = csv.QUOTE_ALL)			#inizializzo subito il writer csv, in modo tale da poter scriver deirettamente su un nuovo file csv
-			#inserisci i riferimenti all'interno del file csv finale
+		with open(trova_path(ide_str, data_iniziale) + str(ide_str) + ".csv", "w") as myfile:		# crea i nuovi file all'interno della cartella data dalla dunzione trova_path()
+			wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)			# inizializzo subito il writer csv, in modo tale da poter scriver deirettamente su un nuovo file csv
+			# inserisci i riferimenti all'interno del file csv finale
 			wr.writerow(["NUMERO", "ID", "NOME", "DATA", "T MED", "UMID", "PG", "FB", "VEN-VEL", "RAD"])
 
 		# apertura file e controllo dei suoi dati ===================================
-			file_xls = xlrd.open_workbook(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		#apri il file appena salvato
+			file_xls = xlrd.open_workbook(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		# apri il file appena salvato
 			sheet = file_xls.sheet_by_index(0)					# seleziona il foglio di lavoro
 			for riga in range(sheet.nrows):						# cicla su ogni riga
 				if(riga == 0):
@@ -162,8 +153,8 @@ def main():
 	# ritorna nella pagina prima e ripeti la procedura ==============================
 		# ricerca il pulsante per tornare indietro
 		ritorna = browser.find_element_by_xpath('//*[@id="articolo"]/form[1]/button')
-		ritorna.click()		#premi il pulsante per tornare indietro
-		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:	# apre il file num.txt per effettuare le modifiche
+		ritorna.click()		# premi il pulsante per tornare indietro
+		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:	 # apre il file num.txt per effettuare le modifiche
 			if num > 86:										# se num è maggiore di 86
 				f.write(str(0))									# riporta il numero di stazione fatte a 0
 				f.close()										# chiudi il file
@@ -172,6 +163,7 @@ def main():
 				f.close()										# chiudi il file
 	browser.close()												# finita tutta la procedura, chiudi la connessione
 	sys.exit("Programma terminato;")							# termina l'esecuzione
+
 
 if __name__ == '__main__':										# se il programma è eseguito manualmente
 	main()														# richiama la funzione

@@ -6,6 +6,7 @@ il download del file xls
 from Log_Bot_xls import *			# dal programma Log_Bot_xls importa tutto, per sapere il valore di ide_str
 import os							# importazione del modulo os per lavorare sul sistema
 
+
 def trova_pdown(ide_str, data_iniziale):		# funzione trova_pdown()
 	pat_ide = ide_str							# la variabile pat_ide corrisponde a ide_str dal file Log_Bot_xls
 	if pat_ide == ide_str:						# Controllo inutile ma sempre funzionale, in quanto controlla che le due variabili siano uguali prima di proseguire
@@ -182,9 +183,9 @@ def trova_pdown(ide_str, data_iniziale):		# funzione trova_pdown()
 		elif ide_str == str(75):
 			pat_ide = "Zortea/"
 		else:						# altrimenti
-			print("ERROR: The program can't associate the file to a folder") # stampa il testo
+			print("ERROR: The program can't associate the file to a folder")  # stampa il testo
 	k = dict(IP="Stazioni_Meteo_Trentino/", ID=pat_ide)  # creazione di un dizionario con chiave IP e valore ID che corrisponde a pat_ide
 	if data_iniziale.year == 2017:   	 # se la data del file xls da scaricare è uguale a 2017
 		da_ta = "2017/"					 # la variabile da_ta corrisponde alla cartella 2017
-	print(k["IP"] + k["ID"] + da_ta + "dati/" + "xls/")	# stampa per visionare l'indirizzo di path ottenuto
-	return(k["IP"] + k["ID"] + da_ta + "dati/" + "xls/") # ritorna al programma Log_Bot_xls la path
+	print(k["IP"] + k["ID"] + da_ta + "dati/" + "xls/")	 # stampa per visionare l'indirizzo di path ottenuto
+	return(k["IP"] + k["ID"] + da_ta + "dati/" + "xls/")  # ritorna al programma Log_Bot_xls la path

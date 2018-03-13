@@ -6,10 +6,11 @@ il file csv
 from Log_Bot_xls import *			# importazione da Log_Bot_xls di tutto
 import os							# importazione del modulo os
 
-def trova_path(ide_str, data_iniziale):  # funzione trova_path()
-	pat_ide = ide_str					 # la variabile pat_ide è uguale alla variabile ide_str
-	if pat_ide == ide_str:    			 # Controllo inutile ma sempre funzionale, in quanto controlla che le due variabili siano uguali prima di proseguire
-		if ide_str == str(30):			 # ciclo che se ide_str corrisponde alla determinata stringa, fa diventare la variabile pat_ide uaguale al nome della stazione assegnatale
+
+def trova_path(ide_str, data_iniziale):   # funzione trova_path()
+	pat_ide = ide_str					  # la variabile pat_ide è uguale alla variabile ide_str
+	if pat_ide == ide_str:    			  # Controllo inutile ma sempre funzionale, in quanto controlla che le due variabili siano uguali prima di proseguire
+		if ide_str == str(30):			  # ciclo che se ide_str corrisponde alla determinata stringa, fa diventare la variabile pat_ide uaguale al nome della stazione assegnatale
 			pat_ide = "Ala/"
 		elif ide_str == str(59):
 			pat_ide = "Aldeno/"
