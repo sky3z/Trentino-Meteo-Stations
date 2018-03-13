@@ -9,12 +9,10 @@ import os
 class LetterMaker(object):
 	""""""
 
-	def __init__(self, pdf_file, org, seconds, namestation, id):
+	def __init__(self, pdf_file, namestation, id):
 		self.c = canvas.Canvas(pdf_file, pagesize=letter)
 		self.styles = getSampleStyleSheet()
 		self.width, self.height = letter
-		self.organization = org
-		self.seconds = seconds
 		self.namestation = namestation
 		self.id = id
 
@@ -23,7 +21,7 @@ class LetterMaker(object):
 		voffset = 65
 
 		# add a logo and size it
-		logo = Image('Metacortex_Posit.jpg')
+		logo = Image('Meta-logo.jpg')
 		logo.drawHeight = 3*inch
 		logo.drawWidth = 3.5*inch
 		logo.wrapOn(self.c, self.width, self.height)
@@ -83,7 +81,7 @@ class LetterMaker(object):
 		"""
 		self.createParagraph(tMedia, 18, voffset+25)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
-				["0", "0", "0"]]
+				[valTot, valPresTMED,"%d" %(percTMED)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (-1,-1), (-1,-1), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
@@ -96,7 +94,7 @@ class LetterMaker(object):
 		"""
 		self.createParagraph(umid, 18, voffset + 50)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
-				["0", "0", "0"]]
+				[valTot, valPresUMID,"%d" %(percUMID)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
@@ -109,7 +107,7 @@ class LetterMaker(object):
 		"""
 		self.createParagraph(piogg, 18, voffset + 75)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
-				["0", "0", "0"]]
+				[valTot, valPresPG,"%d" %(percPG)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
@@ -122,7 +120,7 @@ class LetterMaker(object):
 		"""
 		self.createParagraph(bagnFogl, 18, voffset + 100)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
-				["0", "0", "0"]]
+				[valTot, valPresFB,"%d" %(percFB)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
@@ -135,7 +133,7 @@ class LetterMaker(object):
 		"""
 		self.createParagraph(velVento, 18, voffset + 125)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
-				["0", "0", "0"]]
+				[valTot, valPresVenVel,"%d" %(percVenVel)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
@@ -148,7 +146,7 @@ class LetterMaker(object):
 		"""
 		self.createParagraph(radSolare, 18, voffset + 150)
 		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
-				["0", "0", "0"]]
+				[valTot, valPresRAD,"%d" %(percRAD)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
@@ -177,11 +175,89 @@ class LetterMaker(object):
 		""""""
 		self.c.save()
 
-	def obtainsData(self):
-		""""""
-		self.pathname = os.path.abspath(os.path)
 
 if __name__ == "__main__":
-	doc = LetterMaker("example.pdf", "Metacortex", 10, "Paveneggo", "(30)")
-	doc.createDocument()
-	doc.savePDF()
+	aa = ['Ala', 'Aldeno', 'Arco', 'Arsio', 'Avio', 'Banco_Casez', 'Baselga_di_Pine', 'Besagno', 'Besenello', 'Bezzecca', 'Bleggio_Superiore',
+		'Borgo_Valsugana', 'Brancolino', 'Caldes', 'Caldonazzo','Cavedine', 'Cembra', 'Cles', 'Cognola', 'Coredo', 'Cunevo', 'Denno', 'Dercolo',
+		'Dro', 'Faedo_Maso_Togn', 'Fondo', 'Gardolo', 'Giovo_Bosch', 'Lavaze', 'Lavis', 'Levico', 'Livo', 'Lomaso', 'Loppio', 'Malga_Flavona',
+		'Mama_di_Avio', 'Marco', 'Maso_Callianer', 'Mezzocorona_Novali', 'Mezzocorona_Piovi_Veci', 'Mezzolombardo', 'Mori', 'Nago', 'Nanno',
+		'Nave_San_Rocco', 'Nomi', 'Ospedaletto', 'Paneveggio', 'Passo_Vezzena', 'Pedersano', 'Pellizzano', 'Pergine', 'Pietramurata', 'Pinzolo_Pra_Rodont',
+		'Polsa', 'Predazzo', 'Prezzano', 'Rabbi', 'Revo', 'Riva_del_Garda', 'Romagnano', 'Romeno', 'Ronzo_Chienis', 'Rovere_della_Luna', 'Rovereto',
+		'S_Michele_a_A', 'S_Orsola', 'Sarche', 'Savignano', 'Segno', 'Serravalle', 'Spormaggiore', 'Stenico', 'Storo', 'Telve', 'Terlago', 'Terzolas',
+		'Ton', 'Toss_Castello', 'Trento_Sud', 'Verla', 'Vigolo_Vattaro', 'Volano', 'Zambana', 'Zortea']
+
+	for a in aa:
+		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino", a, "2017", "dati", "csv"))
+		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino/", a, "2017/", "report", a))
+		for filename in os.listdir(pathname):
+			with open(pathname + "/" + filename) as handle:
+				try:
+					next(handle)
+					next(handle)
+				except Exception:
+					continue
+
+				VALORE_ASSENTE = "--"
+				valTot = 0;			#valori totali
+				valAssTMED = 0;		#valori assenti temperatura
+				valAssUMID = 0;		#valori assenti umidità
+				valAssPG   = 0;		#valori assenti pioggia
+				valAssFB   = 0;		#valori assenti bagnatura fogliare
+				valAssVenVel = 0;	#valori assenti	velocità vento
+				valAssRAD  = 0;		#valori assenti	radiazione solare
+				boot = 1;			#operazioni da eseguire una volta sola
+				nomeStat = "";		#nome stazione	[da prendere una sola volta per stazione]
+				idStat = "";		#id stazione	[da prendere una sola volta per stazione]
+
+				for riga in handle:						#cicla tutte le righe del file corrente
+					if riga.strip():		#se la riga non è vuota [?????non dovrebbero esserci linee vuote, però non so perche ne compaiono?????]
+						valTot = valTot + 1				#incrementa i valori totali
+						riga = riga.replace("\"", "")	#rimuori i doppi apici
+						comp = riga.split(",")			#separa i vari componenti (0 -> NUMERO, 1 -> ID, 2 -> NOME, 3 -> DATA, 4 -> T MED, 5 -> UMID, 6 -> PG, 7 -> FB, 8 -> VEN-VEL, 9 -> RAD)
+
+						#recupero dati per nome file [da fare una volta sola per stazione]
+						if boot == 1:
+							boot = -1			#non ripetere
+							idStat = comp[1]	#prendi l'id della stazione
+							nomeStat = comp[2]	#prendi il nome della stazione
+
+
+						#controlla i vari componenti e se corrispondono a "VALORE_ASSENTE" incrementa la variabile associata
+						if comp[4] == VALORE_ASSENTE:	#temperatura
+							valAssTMED = valAssTMED + 1
+
+						if comp[5] == VALORE_ASSENTE:	#temperatura
+							valAssUMID = valAssUMID + 1
+
+						if comp[6] == VALORE_ASSENTE:	#temperatura
+							valAssPG = valAssPG + 1
+
+						if comp[7] == VALORE_ASSENTE:	#temperatura
+							valAssFB = valAssFB + 1
+
+						if comp[8] == VALORE_ASSENTE:	#temperatura
+							valAssVenVel = valAssVenVel + 1
+
+						if comp[9] == VALORE_ASSENTE:	#temperatura
+							valAssRAD = valAssRAD + 1
+
+						valPresTMED = valTot - valAssTMED
+						percTMED = (valPresTMED * 100) / valTot
+
+						valPresUMID = valTot - valAssUMID
+						percUMID = (valPresUMID * 100) / valTot
+
+						valPresPG = valTot - valAssPG
+						percPG = (valPresPG * 100) / valTot
+
+						valPresFB = valTot - valAssFB
+						percFB = (valPresFB * 100) / valTot
+
+						valPresVenVel = valTot - valAssVenVel
+						percVenVel = (valPresVenVel * 100) / valTot
+
+						valPresRAD = valTot - valAssRAD
+						percRAD = (valPresRAD * 100) / valTot
+				doc = LetterMaker(final_pathname + "_report" + ".pdf", nomeStat, "("+idStat+")")
+				doc.createDocument()
+				doc.savePDF()

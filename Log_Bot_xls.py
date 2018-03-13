@@ -68,6 +68,8 @@ def main():
 			num = num - 1
 	while True:
 		num = num + 1
+		if num == 16:
+			num  = 16 + 1
 		num_str = str(num)
 
 		# località stazione meteo
