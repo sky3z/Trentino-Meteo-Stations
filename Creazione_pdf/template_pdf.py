@@ -161,7 +161,7 @@ class LetterMaker(object):
 
 		self.c.showPage()
 
-		self.drawing = Drawing(800, 400)
+		self.drawing = Drawing(200, 400)
 		self.drawing.rotate(-90)
 		self.data = [(percRAD,percVenVel,percFB,percPG,percUMID,percTMED)]
 		self.names = ["Radiazione solare", "Velocità vento", "Bagnatura fogliare", "Pioggia", "Umidità", "Temperatura media"]
@@ -169,7 +169,7 @@ class LetterMaker(object):
 		self.bc.x = 20
 		self.bc.y = 50
 		self.bc.height = 400
-		self.bc.width = 650
+		self.bc.width = 600
 		self.bc.data = self.data
 		self.bc.strokeColor = colors.white
 		self.bc.valueAxis.valueMin = 0
@@ -181,6 +181,14 @@ class LetterMaker(object):
 		self.bc.categoryAxis.categoryNames = self.names
 		self.drawing.add(self.bc)
 		renderPDF.draw(self.drawing, self.c, 40,700)
+
+		self.d = Drawing(0,0)
+		self.d.rotate(-90)
+		self.c.rotate(-90)
+		self.c.setFont('Helvetica', 30)
+		self.cb = self.c.drawString(-600,525,"Percentuale di funzionamento")
+		self.d.add(self.cb)
+		renderPDF.draw(self.d, self.c, 100,100)
 
 
 	def coord(self, x, y, unit=1):
