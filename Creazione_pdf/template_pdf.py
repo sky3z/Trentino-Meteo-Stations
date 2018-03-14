@@ -8,6 +8,7 @@ from reportlab.lib.colors import PCMYKColor
 from reportlab.graphics.shapes import Drawing
 from reportlab.graphics.charts.barcharts import HorizontalBarChart
 from reportlab.graphics import renderPDF
+from reportlab.platypus.flowables import Flowable
 import os
 
 class LetterMaker(object):
@@ -97,7 +98,7 @@ class LetterMaker(object):
 		<b>Umidità</b></font>
 		"""
 		self.createParagraph(umid, 18, voffset + 50)
-		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
+		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
 				[valTot, valPresUMID,"%d" %(percUMID)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
@@ -110,7 +111,7 @@ class LetterMaker(object):
 		<b>Pioggia</b></font>
 		"""
 		self.createParagraph(piogg, 18, voffset + 75)
-		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
+		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
 				[valTot, valPresPG,"%d" %(percPG)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
@@ -123,7 +124,7 @@ class LetterMaker(object):
 		<b>Bagnatura fogliare</b></font>
 		"""
 		self.createParagraph(bagnFogl, 18, voffset + 100)
-		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
+		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
 				[valTot, valPresFB,"%d" %(percFB)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
@@ -136,7 +137,7 @@ class LetterMaker(object):
 		<b>Velocità vento</b></font>
 		"""
 		self.createParagraph(velVento, 18, voffset + 125)
-		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
+		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
 				[valTot, valPresVenVel,"%d" %(percVenVel)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
@@ -149,7 +150,7 @@ class LetterMaker(object):
 		<b>Radiazione solare</b></font>
 		"""
 		self.createParagraph(radSolare, 18, voffset + 150)
-		data = [["Dati attesi", "Dati effettivi", "Percentuale"],
+		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
 				[valTot, valPresRAD,"%d" %(percRAD)+"%"]]
 		table = Table(data, colWidths=2*inch)
 		table.setStyle([("VALIGN", (0,0), (0,0), "TOP"),
@@ -160,31 +161,26 @@ class LetterMaker(object):
 
 		self.c.showPage()
 
-		self.drawing = Drawing(400, 200)
+		self.drawing = Drawing(800, 400)
+		self.drawing.rotate(-90)
 		self.data = [(percRAD,percVenVel,percFB,percPG,percUMID,percTMED)]
 		self.names = ["Radiazione solare", "Velocità vento", "Bagnatura fogliare", "Pioggia", "Umidità", "Temperatura media"]
 		self.bc = HorizontalBarChart()
 		self.bc.x = 20
 		self.bc.y = 50
-		self.bc.height = 200
-		self.bc.width = 400
+		self.bc.height = 400
+		self.bc.width = 650
 		self.bc.data = self.data
 		self.bc.strokeColor = colors.white
 		self.bc.valueAxis.valueMin = 0
 		self.bc.valueAxis.valueMax = 100
-		self.bc.valueAxis.valueStep = 10
+		self.bc.valueAxis.valueStep = 5
 		self.bc.categoryAxis.labels.boxAnchor = 'ne'
 		self.bc.categoryAxis.labels.dx = -10
 		self.bc.categoryAxis.labels.fontName = 'Helvetica'
 		self.bc.categoryAxis.categoryNames = self.names
-		self.bc.bars[0, 0].fillColor = colors.yellow
-		self.bc.bars[0, 1].fillColor = colors.lightskyblue
-		self.bc.bars[0, 2].fillColor = colors.green
-		self.bc.bars[0, 3].fillColor = colors.cyan
-		self.bc.bars[0, 4].fillColor = colors.blue
-		self.bc.bars[0, 5].fillColor = colors.red
 		self.drawing.add(self.bc)
-		renderPDF.draw(self.drawing, self.c, 80,200)
+		renderPDF.draw(self.drawing, self.c, 40,700)
 
 
 	def coord(self, x, y, unit=1):
