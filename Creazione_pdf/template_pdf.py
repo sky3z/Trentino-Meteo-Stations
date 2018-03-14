@@ -2,8 +2,12 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import mm, inch
 from reportlab.pdfgen import canvas
-from reportlab.platypus import Image, Paragraph, Table
+from reportlab.platypus import Image, Paragraph, Table, PageBreak
 from reportlab.lib import colors
+from reportlab.lib.colors import PCMYKColor
+from reportlab.graphics.shapes import Drawing
+from reportlab.graphics.charts.barcharts import HorizontalBarChart
+from reportlab.graphics import renderPDF
 import os
 
 class LetterMaker(object):
@@ -153,6 +157,34 @@ class LetterMaker(object):
 						("GRID", (0,0), (-1,0), 1, colors.black)])
 		table.wrapOn(self.c, self.width, self.height)
 		table.drawOn(self.c, *self.coord(18,230, mm))
+
+		self.c.showPage()
+
+		self.drawing = Drawing(400, 200)
+		self.data = [(percRAD,percVenVel,percFB,percPG,percUMID,percTMED)]
+		self.names = ["Radiazione solare", "Velocità vento", "Bagnatura fogliare", "Pioggia", "Umidità", "Temperatura media"]
+		self.bc = HorizontalBarChart()
+		self.bc.x = 20
+		self.bc.y = 50
+		self.bc.height = 200
+		self.bc.width = 400
+		self.bc.data = self.data
+		self.bc.strokeColor = colors.white
+		self.bc.valueAxis.valueMin = 0
+		self.bc.valueAxis.valueMax = 100
+		self.bc.valueAxis.valueStep = 10
+		self.bc.categoryAxis.labels.boxAnchor = 'ne'
+		self.bc.categoryAxis.labels.dx = -10
+		self.bc.categoryAxis.labels.fontName = 'Helvetica'
+		self.bc.categoryAxis.categoryNames = self.names
+		self.bc.bars[0, 0].fillColor = colors.yellow
+		self.bc.bars[0, 1].fillColor = colors.lightskyblue
+		self.bc.bars[0, 2].fillColor = colors.green
+		self.bc.bars[0, 3].fillColor = colors.cyan
+		self.bc.bars[0, 4].fillColor = colors.blue
+		self.bc.bars[0, 5].fillColor = colors.red
+		self.drawing.add(self.bc)
+		renderPDF.draw(self.drawing, self.c, 80,200)
 
 
 	def coord(self, x, y, unit=1):
