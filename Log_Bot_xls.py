@@ -27,7 +27,6 @@ def main():
 	# Apri il file relativo alla prima stazione controllata
 	oggi = dt.datetime(2017, 12, 31, 23, 59, 59)						# data che si vuole immettere
 	data_iniziale = oggi - dt.timedelta(hours=8759)			# un anno prima
-	print(oggi, data_iniziale)
 	PAUSA = 4		# pausa in secondi da eseguire dopo ogni download
 
 	# componenti necessari a selezionare il periodo di riferimento
@@ -119,7 +118,6 @@ def main():
 		path_file_nuovo = max(lista, key=os.path.getctime)		# cerca il file più recente
 		path_file_nuovo = str(path_file_nuovo)					# trasforma il suo path in una stringa
 		nome_file_nuovo = path_file_nuovo.split("\\")[-1]		# trova il suo nome
-		print(nome_file_nuovo)
 		try:
 			os.remove(trova_pdown(ide_str, data_iniziale) + ide_str + ".xls")		# se il file finale esiste già nella cartella data dalla funzione trova_pdown(), rimuovilo
 		except FileNotFoundError:

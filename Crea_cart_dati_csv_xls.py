@@ -5,6 +5,7 @@ poterla creare. Logicamente se questa non esiste già, come dice il comando if n
 """
 
 import os                              # importazione del modulo os
+import shutil
 
 # lista di tutte le stazioni ottenuta dal file csv tramite uno script
 aa = ['Ala', 'Aldeno', 'Arco', 'Arsio', 'Avio', 'Banco_Casez', 'Baselga_di_Pine', 'Besagno', 'Besenello', 'Bezzecca', 'Bleggio_Superiore',
@@ -18,6 +19,6 @@ aa = ['Ala', 'Aldeno', 'Arco', 'Arsio', 'Avio', 'Banco_Casez', 'Baselga_di_Pine'
 
 for a in aa:                          # per a in tutte le posizioni della lista
 	curr_dir = os.getcwd()            # si prende la directory corrente
-	final_dir = os.path.join(curr_dir, 'Stazioni_Meteo_Trentino', a, '2017', 'dati', ' ')  # aggiungere 'csv' o 'xls' in base a quale cartella si vuole creare
+	final_dir = os.path.join(curr_dir, 'Stazioni_Meteo_Trentino', a, '2017', 'dati', 'csv')  # aggiungere 'csv' o 'xls' in base a quale cartella si vuole creare
 	if not os.path.exists(final_dir):  # se la cartella 'csv' o 'xls' non esiste già
 		os.makedirs(final_dir)        # crea la cartella con la path di final_dir

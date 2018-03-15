@@ -185,5 +185,7 @@ def trova_path(ide_str, data_iniziale):   # funzione trova_path()
 	k = dict(IP="Stazioni_Meteo_Trentino/", ID=pat_ide)			# creazione di un dizionario con chiave IP e valore ID che corrisponde a pat_ide
 	if data_iniziale.year == 2017:								# se la data del file xls da scaricare è uguale a 2017
 		da_ta = "2017/"										    # la variabile da_ta corrisponde alla cartella 2017
+	elif data_iniziale.year == 2016:
+		da_ta = "2016/"
 	print(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")			# stampa per visionare l'indirizzo di path ottenuto
 	return(k["IP"] + k["ID"] + da_ta + "dati/" + "csv/")		# ritorna al programma Log_Bot_xls la path

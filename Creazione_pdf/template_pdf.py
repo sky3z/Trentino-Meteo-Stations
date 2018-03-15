@@ -223,8 +223,8 @@ if __name__ == "__main__":
 		'Ton', 'Toss_Castello', 'Trento_Sud', 'Verla', 'Vigolo_Vattaro', 'Volano', 'Zambana', 'Zortea']
 
 	for a in aa:
-		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino", a, "2017", "dati", "csv"))
-		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino/", a, "2017/", "report", a))
+		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino", a, "2016", "dati", "csv"))
+		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino/", a, "2016/", "report", a))
 		for filename in os.listdir(pathname):
 			with open(pathname + "/" + filename) as handle:
 				try:
