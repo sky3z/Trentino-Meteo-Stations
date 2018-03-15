@@ -11,7 +11,7 @@ from reportlab.graphics import renderPDF
 from reportlab.platypus.flowables import Flowable
 import os
 
-class LetterMaker(object):
+class PDFMaker(object):
 	""""""
 
 	def __init__(self, pdf_file, namestation, id):
@@ -26,7 +26,7 @@ class LetterMaker(object):
 		voffset = 65
 
 		# add a logo and size it
-		logo = Image('Meta-logo.jpg')
+		logo = Image('Image_pdf/Meta-logo.jpg')
 		logo.drawHeight = 3*inch
 		logo.drawWidth = 3.5*inch
 		logo.wrapOn(self.c, self.width, self.height)
@@ -206,7 +206,7 @@ class LetterMaker(object):
 			p = Paragraph(ptext, style=style)
 			p.wrapOn(self.c, self.width, self.height)
 			p.drawOn(self.c, *self.coord(x, y, mm))
-
+			
 	def savePDF(self):
 		""""""
 		self.c.save()
@@ -294,6 +294,6 @@ if __name__ == "__main__":
 
 						valPresRAD = valTot - valAssRAD
 						percRAD = (valPresRAD * 100) / valTot
-				doc = LetterMaker(final_pathname + "_report" + ".pdf", nomeStat, "("+idStat+")")
+				doc = PDFMaker(final_pathname + "_report" + ".pdf", nomeStat, "("+idStat+")")
 				doc.createDocument()
 				doc.savePDF()
