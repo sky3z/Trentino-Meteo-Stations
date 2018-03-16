@@ -7,7 +7,8 @@ import glob														# per poter ricercare i file con le regular expression
 import os
 import time														# per poter eseguire una pausa in secondi
 import xlrd														# per poter operare su file .xls
-import selenium													# per poter navigare in internet in modo automatico
+import selenium
+import sys													# per poter navigare in internet in modo automatico
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -17,16 +18,16 @@ import datetime as dt											# per poter gestire le date
 from idd_str import *   										# per poter richiamare la funzione trova_path()
 from idd_down import *  										# per poter richiamare la funzione trova_pdown()
 from winreg import *											# per soprire l'indirizzo assoluto della cartella di download
+from main import *
 
-
-def logBot():
+def logBot(oggi, data_iniziale):
 	# ricerca la cartella di dovnload
 	with OpenKey(HKEY_CURRENT_USER, 'SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Shell Folders') as key:
 		Downloads = QueryValueEx(key, '{374DE290-123F-4565-9164-39C4925E467B}')[0]	 # path della cartella di downoad
 
 	# Apri il file relativo alla prima stazione controllata
-	oggi = dt.datetime(2017, 12, 31, 23, 59, 59)						# data che si vuole immettere
-	data_iniziale = oggi - dt.timedelta(hours=8759)			# un anno prima
+	#oggi = dt.datetime(2015, 12, 31, 23, 59, 59)						# data che si vuole immettere
+	#data_iniziale = oggi - dt.timedelta(hours=8759)			# un anno prima
 	PAUSA = 4		# pausa in secondi da eseguire dopo ogni download
 
 	# componenti necessari a selezionare il periodo di riferimento
@@ -61,15 +62,11 @@ def logBot():
 	dir_num = os.path.dirname(__file__)							# directory dir_num è uaguale a __file__
 	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:		# viene aperto num.txt con permessi di lettura
 		num = int(f.read())										# num è uguale all'intero di quello che legge nel file
-		if num == 0:											# se num è uguale a 0, lascia così, questo controllo è stato fatto perchè se si andava a togliere sempre -1
-			num = 0
-		elif num > 0:											# se num è maggiore a 0, sottrai meno 1, così riparte dall'ultima stazione effettuata prima del crash
-			num = num - 1
+		print(num)
 	while True:
 		num = num + 1
-		if num == 16:
-			num  = 16 + 1
 		num_str = str(num)
+		print(num)
 
 		# località stazione meteo
 		loc = browser.find_element_by_xpath('//*[@id="articolo"]/form/select[1]/option[' + num_str + ']')
@@ -135,6 +132,8 @@ def logBot():
 			sheet = file_xls.sheet_by_index(0)					# seleziona il foglio di lavoro
 			for riga in range(sheet.nrows):						# cicla su ogni riga
 				if(riga == 0):
+					continue
+				elif(riga == None):
 					continue									# la riga contiene riferimenti che non servono, allora va saltata
 				dati = []										# blocco di dati che va scritto poi nel file .csv
 				dati.append(num_str.strip())					# aggiungi il numero della stazione
@@ -157,9 +156,11 @@ def logBot():
 		with open(os.path.join(dir_num, 'num.txt'), 'w') as f:	 # apre il file num.txt per effettuare le modifiche
 			if num >= 86:										# se num è maggiore di 86
 				f.write(str(0))									# riporta il numero di stazione fatte a 0
-				f.close()										# chiudi il file
+				f.close()
+				browser.close()
+				sys.exit("Programma Terminato")										# chiudi il file
 			else:
 				f.write(str(num))								# altrimenti scrivi sottoforma di stringa il numero della stazione appena effettuata
 				f.close()										# chiudi il file
 	browser.close()												# finita tutta la procedura, chiudi la connessione
-	sys.exit("Programma terminato;")							# termina l'esecuzione
+	sys.exit("Programma terminato")							# termina l'esecuzione

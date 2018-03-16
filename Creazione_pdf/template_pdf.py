@@ -1,43 +1,46 @@
-from reportlab.lib.pagesizes import letter						# moduli reportlab per creare pdf
+"""
+Programma principale per la creazione del fil PDF basato sui valori in percentuale presi dai file .csv
+"""
+from reportlab.lib.pagesizes import letter										# moduli reportlab per creare pdf
 from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.lib.units import mm, inch
-from reportlab.pdfgen import canvas
-from reportlab.platypus import Image, Paragraph, Table, PageBreak
 from reportlab.lib import colors
 from reportlab.lib.colors import PCMYKColor
+from reportlab.pdfgen import canvas
+from reportlab.platypus import Image, Paragraph, Table, PageBreak
+from reportlab.platypus.flowables import Flowable
 from reportlab.graphics.shapes import Drawing
 from reportlab.graphics.charts.barcharts import HorizontalBarChart
 from reportlab.graphics import renderPDF
-from reportlab.platypus.flowables import Flowable
-import os														# importazione modulo os
+import os																		# importazione modulo os
 
-class PDFMaker(object):											# creazione classe PDFMaker
+class PDFMaker(object):															# creazione classe PDFMaker
 	""""""
 
-	def __init__(self, pdf_file, namestation, id):				# funzione init per la classe PDFMaker
-		self.c = canvas.Canvas(pdf_file, pagesize=letter)		# indica il foglio di lavoro
-		self.styles = getSampleStyleSheet()						# indica lo stile del foglio
-		self.width, self.height = letter						# larghezza e altezza hanno dimensioni lettera, formato preimpostato
-		self.namestation = namestation							# indica il nome della stazione
-		self.id = id											# indica l'id della stazione
+	def __init__(self, pdf_file, namestation, id):								# funzione init per la classe PDFMaker
+		self.c = canvas.Canvas(pdf_file, pagesize=letter)						# indica il foglio di lavoro
+		self.styles = getSampleStyleSheet()										# indica lo stile del foglio
+		self.width, self.height = letter										# larghezza e altezza hanno dimensioni lettera, formato preimpostato
+		self.namestation = namestation											# indica il nome della stazione
+		self.id = id															# indica l'id della stazione
 
-	def createDocument(self):									# funzione che crea il documento
+	def createDocument(self):													# funzione che crea il documento
 		""""""
-		voffset = 65											# offset verticale
+		voffset = 65															# offset verticale
 
 		# add a logo and size it
-		logo = Image('Image_pdf/Meta-logo.jpg')					# indica la path dell'immagine
-		logo.drawHeight = 3*inch								# indica l'alteza dell'immagine
-		logo.drawWidth = 3.5*inch								# indica la larghezza dell'immagine
-		logo.wrapOn(self.c, self.width, self.height)			# indica l'impostazione dell'immagine nel foglio
-		logo.drawOn(self.c, *self.coord(65, 80, mm))			# disegna la foto a coordinate fissate 65,80, mm
+		logo = Image('Image_pdf/Meta-logo.jpg')									# indica la path dell'immagine
+		logo.drawHeight = 3*inch												# indica l'alteza dell'immagine
+		logo.drawWidth = 3.5*inch												# indica la larghezza dell'immagine
+		logo.wrapOn(self.c, self.width, self.height)							# indica l'impostazione dell'immagine nel foglio
+		logo.drawOn(self.c, *self.coord(65, 80, mm))							# disegna la foto a coordinate fissate 65,80, mm
 
 		address = """<font size="24">
 		Stazione di %s%s</font>
-        """ % (self.namestation, self.id)						# indica il nome della stazione corrente
-		p = Paragraph(address, self.styles["Normal"])			# creazione di un paragrafo di testo
-		p.wrapOn(self.c, self.width, self.height)				# importazione del testo nel foglio
-		if len(self.namestation) == 6:							# if fatti per centrare il nome della stazione nel foglio
+        """ % (self.namestation, self.id)										# indica il nome della stazione corrente
+		p = Paragraph(address, self.styles["Normal"])							# creazione di un paragrafo di testo
+		p.wrapOn(self.c, self.width, self.height)								# importazione del testo nel foglio
+		if len(self.namestation) == 6:											# if fatti per centrare il nome della stazione nel foglio
 			self.X = 188
 		elif len(self.namestation) == 3:
 			self.X = 223
@@ -79,20 +82,20 @@ class PDFMaker(object):											# creazione classe PDFMaker
 			self.X = 120
 		elif len(self.namestation) == 23:
 			self.X = 116
-		p.drawOn(self.c, *self.coord(self.X, 195))				# diesgna il testo a coordinate...
+		p.drawOn(self.c, *self.coord(self.X, 195))								# diesgna il testo a coordinate...
 
 		tMedia = """<font size="12">
 		<b>Temperatura media</b></font>
-		"""														# paragrafo di testo
-		self.createParagraph(tMedia, 18, voffset+25)			# creazione paragrafo
+		"""																		# paragrafo di testo
+		self.createParagraph(tMedia, 18, voffset+25)							# creazione paragrafo
 		data = [["Dati attesi", "Dati effettivi", "Percentuale di funzionamento"],
-				[valTot, valPresTMED,"%d" %(percTMED)+"%"]]		# dati per tabella
-		table = Table(data, colWidths=2*inch)					# inizializzazione tabella
+				[valTot, valPresTMED,"%d" %(percTMED)+"%"]]						# dati per tabella
+		table = Table(data, colWidths=2*inch)									# inizializzazione tabella
 		table.setStyle([("VALIGN", (-1,-1), (-1,-1), "TOP"),
 						("GRID", (0,0), (-1,-1), 1, colors.black),
-						("GRID", (0,0), (-1,0), 1, colors.black)])	# stile tabella
-		table.wrapOn(self.c, self.width, self.height)				# importazione nel foglio della tabella
-		table.drawOn(self.c, *self.coord(18, 105, mm))				# disegno della tabella a coordinate...
+						("GRID", (0,0), (-1,0), 1, colors.black)])				# stile tabella
+		table.wrapOn(self.c, self.width, self.height)							# importazione nel foglio della tabella
+		table.drawOn(self.c, *self.coord(18, 105, mm))							# disegno della tabella a coordinate...
 
 		umid = """<font size="12">
 		<b>Umidità</b></font>
@@ -159,28 +162,28 @@ class PDFMaker(object):											# creazione classe PDFMaker
 		table.wrapOn(self.c, self.width, self.height)
 		table.drawOn(self.c, *self.coord(18,230, mm))
 
-		self.c.showPage()											# per iniziare una nuova pagina
+		self.c.showPage()														# per iniziare una nuova pagina
 
-		self.drawing = Drawing(200, 400)							# disegna figura vuota
-		self.drawing.rotate(-90)									# ruota figura vuota
+		self.drawing = Drawing(200, 400)										# disegna figura vuota
+		self.drawing.rotate(-90)												# ruota figura vuota
 		self.data = [(percRAD,percVenVel,percFB,percPG,percUMID,percTMED)]	#dati per il grafico
 		self.names = ["Radiazione solare", "Velocità vento", "Bagnatura fogliare", "Pioggia", "Umidità", "Temperatura media"]	#nomi per grafico
-		self.bc = HorizontalBarChart()								# inizializzazione grafico orizzontale
-		self.bc.x = 20												# x del grafico
-		self.bc.y = 50												# y del grafico
-		self.bc.height = 400										# altezza del grafico
-		self.bc.width = 600											# larghezza grafico
-		self.bc.data = self.data									# dati del grafico sono uguali a data
-		self.bc.strokeColor = colors.white							# colore del grafico
-		self.bc.valueAxis.valueMin = 0								# valore minimo asse
-		self.bc.valueAxis.valueMax = 100							# valore massimo asse
-		self.bc.valueAxis.valueStep = 5								# step di 5 dell'asse
-		self.bc.categoryAxis.labels.boxAnchor = 'ne'				# non importante
-		self.bc.categoryAxis.labels.dx = -10						# etichettatura grafico
-		self.bc.categoryAxis.labels.fontName = 'Helvetica'			# font garfico
-		self.bc.categoryAxis.categoryNames = self.names				# asse dei nomi, quello sotto
-		self.drawing.add(self.bc)									# aggiunta del grafico alla figura vuota
-		renderPDF.draw(self.drawing, self.c, 40,700)				# disegmo del grafico sul pdf
+		self.bc = HorizontalBarChart()											# inizializzazione grafico orizzontale
+		self.bc.x = 20															# x del grafico
+		self.bc.y = 50															# y del grafico
+		self.bc.height = 400													# altezza del grafico
+		self.bc.width = 600														# larghezza grafico
+		self.bc.data = self.data												# dati del grafico sono uguali a data
+		self.bc.strokeColor = colors.white										# colore del grafico
+		self.bc.valueAxis.valueMin = 0											# valore minimo asse
+		self.bc.valueAxis.valueMax = 100										# valore massimo asse
+		self.bc.valueAxis.valueStep = 5											# step di 5 dell'asse
+		self.bc.categoryAxis.labels.boxAnchor = 'ne'							# non importante
+		self.bc.categoryAxis.labels.dx = -10									# etichettatura grafico
+		self.bc.categoryAxis.labels.fontName = 'Helvetica'						# font garfico
+		self.bc.categoryAxis.categoryNames = self.names							# asse dei nomi, quello sotto
+		self.drawing.add(self.bc)												# aggiunta del grafico alla figura vuota
+		renderPDF.draw(self.drawing, self.c, 40,700)							# disegmo del grafico sul pdf
 
 		self.d = Drawing(0,0)
 		self.d.rotate(-90)
@@ -223,8 +226,8 @@ if __name__ == "__main__":
 		'Ton', 'Toss_Castello', 'Trento_Sud', 'Verla', 'Vigolo_Vattaro', 'Volano', 'Zambana', 'Zortea']
 																											# lista di tutte le stazioni
 	for a in aa:
-		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino", a, "2016", "dati", "csv"))			# pathname iniziale
-		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Stazioni_Meteo_Trentino/", a, "2016/", "report", a))	#pathname finale
+		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino", a, "2015", "dati", "csv"))			# pathname iniziale
+		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino/", a, "2015/", "report", a))	#pathname finale
 		for filename in os.listdir(pathname):								# per filename in tutte le directory della pathname
 			with open(pathname + "/" + filename) as handle:					# apri file in pathname
 				try:
