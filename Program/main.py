@@ -6,7 +6,7 @@ from crea__staz_inDir import *											# importazione da crea__staz_inDir
 import datetime as dt													# import di datetime provvisorio
 
 def main():
-	oggi = dt.datetime(2015,12,31,23)
+	oggi = dt.datetime(2017,12,31,23)
 	data_iniziale = oggi - dt.timedelta(hours = 8759)
 	create_folder(data_iniziale)										# funzione main
 	logBot(oggi, data_iniziale)											# richiama funzione logBot()
