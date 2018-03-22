@@ -62,7 +62,6 @@ def logBot(oggi, data_iniziale):
 	dir_num = os.path.dirname(__file__)							# directory dir_num è uaguale a __file__
 	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:		# viene aperto num.txt con permessi di lettura
 		num = int(f.read())										# num è uguale all'intero di quello che legge nel file
-		print(num)
 		if num == 16:
 			num = num + 1
 	while True:

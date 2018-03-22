@@ -35,7 +35,7 @@ class PDFMaker(object):															# creazione classe PDFMaker
 		logo.drawOn(self.c, *self.coord(65, 80, mm))
 																				# disegna la foto a coordinate fissate 65,80, mm
 		tMedia = """<font size="12">
-		<b>Data riferimento: 01/01/2014 a 31/12/2014</b></font>
+		<b>Data riferimento: 01/01/2017 a 31/12/2017</b></font>
 		"""																		# paragrafo di testo
 		self.createParagraph(tMedia, 18, voffset+10)
 		data = [["Nome stazione", "Temperatura media", "Umidità", "Pioggia", "Bagnatura fogliare", "Velocità vento", "Radiazione solare"],
@@ -189,7 +189,7 @@ if __name__ == '__main__':
 		'Ton', 'Toss_Castello', 'Trento_Sud', 'Verla', 'Vigolo_Vattaro', 'Volano', 'Zambana', 'Zortea']
 	bb = list()
 	ban = 0
-	data = "2014"																						# lista di tutte le stazioni
+	data = "2017"																						# lista di tutte le stazioni
 	for a in aa:
 		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino", a, data, "dati", "csv"))			# pathname iniziale
 		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/","report/", "report"))	#pathname finale

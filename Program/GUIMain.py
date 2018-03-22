@@ -1,3 +1,4 @@
+import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
 from PIL import Image, ImageTk
@@ -20,6 +21,9 @@ class Window(Frame):
 		file=Menu(menu)
 		file.add_command(label="Exit", command=self.client_exit)
 		menu.add_cascade(label="File", menu=file)
+		inserisci = Menu(menu)
+		inserisci.add_command(label="Data", command=self.inserisci_data)
+		menu.add_cascade(label="Inserisci", menu=inserisci)
 		help = Menu(menu)
 		help.add_command(label="Show Guide", command=self.showGuide)
 		menu.add_cascade(label="Help", menu=help)
@@ -39,17 +43,26 @@ class Window(Frame):
 							    	          'Le Stazioni del Trentino'""")
 
 	def b1_press(self):
-		oggi = dt.datetime(2016,12,31,23)
-		data_iniziale = oggi - dt.timedelta(hours = 8783)
+		oggi = dt.datetime(2013,12,31,23)
+		data_iniziale = oggi - dt.timedelta(hours = 8759)
 		create_folder(data_iniziale)
 		logBot(oggi, data_iniziale)
 
 	def b1_press_a(self):
 		b1_press()
 
+	def inserisci_data(self):
+		window = tk.Toplevel(self)
+		window.geometry("300x200")
+		textBox = Text(window, height=2, width=10)
+		textBox.pack()
+		bdata= Button(window, font=20, text="OK", command=self.newwindow_destroy)
+		bdata.pack()
 
+	def newwindow_destroy(self):
+		window.quit()
 
-radice = Tk()
+radice = tk.Tk()
 radice.geometry("400x300")
 app = Window(radice)
 radice.mainloop()
