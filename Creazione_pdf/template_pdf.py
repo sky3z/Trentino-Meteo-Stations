@@ -226,8 +226,8 @@ if __name__ == "__main__":
 		'Ton', 'Toss_Castello', 'Trento_Sud', 'Verla', 'Vigolo_Vattaro', 'Volano', 'Zambana', 'Zortea']
 																											# lista di tutte le stazioni
 	for a in aa:
-		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino", a, "2015", "dati", "csv"))			# pathname iniziale
-		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino/", a, "2015/", "report", a))	#pathname finale
+		pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino", a, "2014", "dati", "csv"))			# pathname iniziale
+		final_pathname = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "Program/", "Stazioni_Meteo_Trentino/", a, "2014/", "report", a))	#pathname finale
 		for filename in os.listdir(pathname):								# per filename in tutte le directory della pathname
 			with open(pathname + "/" + filename) as handle:					# apri file in pathname
 				try:

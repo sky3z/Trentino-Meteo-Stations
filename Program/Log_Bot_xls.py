@@ -63,10 +63,11 @@ def logBot(oggi, data_iniziale):
 	with open(os.path.join(dir_num, 'num.txt'), 'r') as f:		# viene aperto num.txt con permessi di lettura
 		num = int(f.read())										# num è uguale all'intero di quello che legge nel file
 		print(num)
+		if num == 16:
+			num = num + 1
 	while True:
 		num = num + 1
 		num_str = str(num)
-		print(num)
 
 		# località stazione meteo
 		loc = browser.find_element_by_xpath('//*[@id="articolo"]/form/select[1]/option[' + num_str + ']')

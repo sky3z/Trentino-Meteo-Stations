@@ -39,8 +39,8 @@ class Window(Frame):
 							    	          'Le Stazioni del Trentino'""")
 
 	def b1_press(self):
-		oggi = dt.datetime(2017,12,31,23)
-		data_iniziale = oggi - dt.timedelta(hours = 8759)
+		oggi = dt.datetime(2016,12,31,23)
+		data_iniziale = oggi - dt.timedelta(hours = 8783)
 		create_folder(data_iniziale)
 		logBot(oggi, data_iniziale)
 
