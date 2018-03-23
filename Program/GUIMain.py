@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
+import threading
 from PIL import Image, ImageTk
 from Log_Bot_xls import *
 from crea__staz_inDir import *
@@ -10,6 +11,7 @@ from main import *
 class Window(Frame):
 	def __init__(self, master=None):
 		Frame.__init__(self, master)
+		threading.Thread.__init__(self)
 		self.master = master
 		self.init_window()
 
@@ -33,6 +35,7 @@ class Window(Frame):
 		b1.place(x=100, y=150)
 		b1.bind("<Return>", self.b1_press_a)
 		b1.focus_force()
+		self.da_ta = None
 
 	def client_exit(self):
 		exit()
@@ -43,25 +46,36 @@ class Window(Frame):
 							    	          'Le Stazioni del Trentino'""")
 
 	def b1_press(self):
-		oggi = dt.datetime(2013,12,31,23)
-		data_iniziale = oggi - dt.timedelta(hours = 8759)
-		create_folder(data_iniziale)
-		logBot(oggi, data_iniziale)
+		if self.da_ta is None:
+			messagebox.showinfo("Warning", """                  Nessuna data selezionata!\nImmettere la data cliccando su inserisci e poi data""")
+		else:
+			oggi = dt.datetime(int(self.da_ta),12,31,23)
+			data_iniziale = dt.datetime(int(self.da_ta),1,1,0)
+			create_folder(data_iniziale)
+			logBot(oggi, data_iniziale)
+
 
 	def b1_press_a(self):
 		b1_press()
 
+	def retrieve_input(self):
+		self.da_ta= self.textBox.get("1.0", END)
+		print(self.da_ta)
+
 	def inserisci_data(self):
-		window = tk.Toplevel(self)
-		window.geometry("300x200")
-		textBox = Text(window, height=2, width=10)
-		textBox.pack()
-		bdata= Button(window, font=20, text="OK", command=self.newwindow_destroy)
+		window = Toplevel(self)
+		window.geometry("200x150")
+		text1 = Label(window, font=18, text="Scrivere solamente l'anno\n del quale poi eseguire \n il programma")
+		text1.pack()
+		self.textBox = Text(window, height=2, width=10)
+		self.textBox.pack()
+		bdata= Button(window, font=20, text="OK", command=lambda: self.retrieve_input())
 		bdata.pack()
 
-	def newwindow_destroy(self):
-		window.quit()
 
+
+Process = threading.Thread(target=Window)
+Process.start()
 radice = tk.Tk()
 radice.geometry("400x300")
 app = Window(radice)
