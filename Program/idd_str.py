@@ -185,4 +185,4 @@ def trova_path(ide_str, data_iniziale):   # funzione trova_path()
 		else:						# altrimenti
 			print("ERROR: The program can't associate the file to a folder")	 # stampa il testo
 	k = dict(IP="Stazioni_Meteo_Trentino/", ID=pat_ide)			# creazione di un dizionario con chiave IP e valore ID che corrisponde a pat_ide
-	return("Program/" + k["IP"] + k["ID"] + str(data_iniziale.year)+ "/" + "dati/" + "csv/")		# ritorna al programma Log_Bot_xls la path
+	return(k["IP"] + k["ID"] + str(data_iniziale.year)+ "/" + "dati/" + "csv/")		# ritorna al programma Log_Bot_xls la path

@@ -1,17 +1,14 @@
 import tkinter as tk
 from tkinter import *
 from tkinter import messagebox
-import threading
-from PIL import Image, ImageTk
 from Log_Bot_xls import *
 from crea__staz_inDir import *
-from main import *
+
 
 
 class Window(Frame):
 	def __init__(self, master=None):
 		Frame.__init__(self, master)
-		threading.Thread.__init__(self)
 		self.master = master
 		self.init_window()
 
@@ -21,6 +18,7 @@ class Window(Frame):
 		menu = Menu(self.master)
 		self.master.config(menu=menu)
 		file=Menu(menu)
+		file.add_command(label="PDF", command=self.makepdf)
 		file.add_command(label="Exit", command=self.client_exit)
 		menu.add_cascade(label="File", menu=file)
 		inserisci = Menu(menu)
@@ -38,7 +36,7 @@ class Window(Frame):
 		self.da_ta = None
 
 	def client_exit(self):
-		exit()
+		self.master.destroy()
 
 	def showGuide(self):
 		messagebox.showinfo("Help", """             	 Help of Stazioni Meteo Trentino\n
@@ -62,6 +60,10 @@ class Window(Frame):
 		self.da_ta= self.textBox.get("1.0", END)
 		print(self.da_ta)
 
+	def makepdf(self):
+		messagebox.showinfo("Info", """                  Questo programma non crea PDF\nUtilizzare l'altro programma per svolgere il pdf di tutte le stazioni""")
+
+
 	def inserisci_data(self):
 		window = Toplevel(self)
 		window.geometry("200x150")
@@ -73,10 +75,8 @@ class Window(Frame):
 		bdata.pack()
 
 
-
-Process = threading.Thread(target=Window)
-Process.start()
-radice = tk.Tk()
+radice = Tk()
 radice.geometry("400x300")
+radice.iconbitmap("favicon.ico")
 app = Window(radice)
 radice.mainloop()
